@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:37:04 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/28 14:35:53 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:25:02 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,21 @@ void	ft_check(t_philo *philo, t_data *data)
 	int			i;
 	long long	current;
 
-	while (!data->died && data->all_eat != data->number_of)
+	while (!ft_check_died(data) && !ft_check_all_eat(data))
 	{
 		i = 0;
 		while (i < data->number_of)
 		{
-			current = ft_time_ms();
-			if (philo[i].times_eat != data->times_must_eat
-				&& data->time_to_die < current - (philo[i].last_eat
-					+ data->start_time))
+			if (!ft_check_still_alive(&(philo[i]), data, current))
 			{
-				pthread_mutex_lock(&philo->data->m_print);
+				current = ft_time_ms();
+				pthread_mutex_lock(&(philo[i].data->m_print));
+				pthread_mutex_lock(&(philo[i].data->m_died));
 				data->died = 1;
-				printf("%lld Philo %d %s\n", current - philo->data->start_time,
+				pthread_mutex_unlock(&(philo[i].data->m_died));
+				printf("%lld %d %s\n", current - philo->data->start_time,
 					philo->id, DIE);
-				pthread_mutex_unlock(&philo->data->m_print);
+				pthread_mutex_unlock(&philo[i].data->m_print);
 				break ;
 			}
 			i++;
@@ -70,7 +70,7 @@ void	ft_close(t_philo *philo, t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->all_stopped != data->number_of)
+	while (!ft_check_all_stopped(data))
 		;
 	while (i < data->number_of)
 	{

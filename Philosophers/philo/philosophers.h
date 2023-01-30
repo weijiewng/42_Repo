@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:35:36 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/28 14:35:41 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:22:53 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	int				died;
 	long long		start_time;
 	int				all_stopped;
+	pthread_mutex_t	m_died;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_all_eat;
 	pthread_mutex_t	m_all_stopped;
@@ -52,6 +53,8 @@ typedef struct s_philo
 	int				right;
 	long long		last_eat;
 	int				times_eat;
+	pthread_mutex_t	m_last_eat;
+	pthread_mutex_t	m_times_eat;
 	struct s_data	*data;
 }					t_philo;
 
@@ -60,6 +63,18 @@ typedef struct s_philo
 */
 int					ft_init_mutex(t_data *data);
 t_philo				*ft_init_philo(t_data *data);
+void				ft_init_philo_static_data(t_philo *philo,
+						t_data *data, int i);
+
+/*
+		mutex_checker.c
+*/
+int					ft_check_still_alive(t_philo *philo,
+						t_data *data, long long current);
+int					ft_check_died(t_data *data);
+int					ft_check_times_eat(t_philo *philo);
+int					ft_check_all_eat(t_data *data);
+int					ft_check_all_stopped(t_data *data);
 
 /*
 		utils.c

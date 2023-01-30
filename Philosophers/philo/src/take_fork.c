@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 14:12:16 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/28 15:15:39 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 17:21:34 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_take_fork(t_philo *philo)
 		return (-1);
 	}
 	if (philo->id % 2 == 0)
-		usleep(100);
+		usleep(400);
 	if (philo->id == 1)
 	{
 		if (ft_handle_first_fork(philo, philo->right) == -1)

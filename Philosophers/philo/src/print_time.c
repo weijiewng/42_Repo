@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:37:35 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/21 11:40:44 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 15:54:59 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ long long	ft_print_timestamp_with_action(char *message, t_philo *philo)
 	long long	ms;
 
 	pthread_mutex_lock(&philo->data->m_print);
-	if (philo->data->died == 1)
+	if (ft_check_died(philo->data))
 	{
 		pthread_mutex_unlock(&philo->data->m_print);
 		return (-1);
 	}
 	ms = ft_time_ms() - philo->data->start_time;
-	printf("%lld Philo %d %s\n", ms, philo->id, message);
+	printf("%lld %d %s\n", ms, philo->id, message);
 	pthread_mutex_unlock(&philo->data->m_print);
 	return (ms);
 }

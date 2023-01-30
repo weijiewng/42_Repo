@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:36:06 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/28 14:26:20 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 15:58:33 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ void	ft_free(t_data *data, t_philo *philo)
 		while (i < data->number_of)
 		{
 			pthread_mutex_destroy(&(data->fork[i]));
+			pthread_mutex_destroy(&(philo[i].m_last_eat));
+			pthread_mutex_destroy(&(philo[i].m_times_eat));
 			i++;
 		}
-		pthread_mutex_destroy(&(data->m_all_eat));
+		pthread_mutex_destroy(&(data->m_died));
 		pthread_mutex_destroy(&(data->m_print));
+		pthread_mutex_destroy(&(data->m_all_eat));
 		pthread_mutex_destroy(&(data->m_all_stopped));
 		if (data->fork)
 			free(data->fork);

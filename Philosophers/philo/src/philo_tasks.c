@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:38:54 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/28 14:12:26 by wewang           ###   ########.fr       */
+/*   Updated: 2023/01/30 15:54:29 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,20 @@ int	ft_eat(t_philo *philo)
 {
 	if (ft_take_fork(philo) == -1)
 		return (-1);
+	pthread_mutex_lock(&(philo->m_last_eat));
 	philo->last_eat = ft_print_timestamp_with_action(EAT, philo);
 	if (philo->last_eat == -1)
+	{
+		pthread_mutex_unlock(&(philo->m_last_eat));
 		return (-1);
+	}
+	pthread_mutex_unlock(&(philo->m_last_eat));
 	ft_ms_sleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(&philo->data->fork[philo->left]);
 	pthread_mutex_unlock(&philo->data->fork[philo->right]);
+	pthread_mutex_lock(&(philo->m_times_eat));
 	philo->times_eat++;
+	pthread_mutex_unlock(&(philo->m_times_eat));
 	return (1);
 }
 
@@ -39,11 +46,11 @@ void	*ft_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	while (!philo->data->died)
+	while (!ft_check_died(philo->data))
 	{
 		if (ft_eat(philo) == -1)
 			break ;
-		if (philo->times_eat == philo->data->times_must_eat)
+		if (ft_check_times_eat(philo))
 		{
 			pthread_mutex_lock(&(philo->data->m_all_eat));
 			philo->data->all_eat++;

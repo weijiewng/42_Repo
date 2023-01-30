@@ -16,6 +16,7 @@ P_FLAGS  := -lpthread
 ################################################################################
 
 SRCS        :=      src/init.c \
+					src/mutex_check.c \
 					src/philo_tasks.c \
 					src/print_time.c \
 					src/take_fork.c \
