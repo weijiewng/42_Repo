@@ -6,7 +6,7 @@
 /*   By: wewang <wewang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:38:54 by wewang            #+#    #+#             */
-/*   Updated: 2023/01/30 15:54:29 by wewang           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:01:12 by wewang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	*ft_routine(void *ptr)
 			break ;
 		if (ft_print_timestamp_with_action(THINK, philo) == -1)
 			break ;
+		usleep(400);
 	}
 	pthread_mutex_lock(&(philo->data->m_all_stopped));
 	philo->data->all_stopped++;

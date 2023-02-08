@@ -15,13 +15,13 @@ P_FLAGS  := -lpthread
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS        :=      src/init.c \
-					src/mutex_check.c \
-					src/philo_tasks.c \
-					src/print_time.c \
-					src/take_fork.c \
-					src/utils.c \
-					src/main.c \
+SRCS        :=      init.c \
+					mutex_check.c \
+					philo_tasks.c \
+					print_time.c \
+					take_fork.c \
+					utils.c \
+					main.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
